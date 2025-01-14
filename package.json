@@ -14,13 +14,12 @@
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-native": "^0.76.6",
-    "styled-components": "^6.1.14"
+    "styled-components": "^6.1.11"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
-    "@types/react": "~18.3.12",
+    "@types/react": "^18.2.45",
     "@types/react-native": "^0.72.8",
-    "@types/styled-components-react-native": "^5.2.5",
     "typescript": "^5.3.3"
   },
   "private": true
