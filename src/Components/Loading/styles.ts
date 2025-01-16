@@ -8,5 +8,5 @@ justify-content: center;
 `
 
 export const LoadIndicator = styled.ActivityIndicator.attrs(({ theme }) => ({
-    color: theme.COLORS.GREEN_700
+    color: theme.COLORS.BASE_500
   }))``;
