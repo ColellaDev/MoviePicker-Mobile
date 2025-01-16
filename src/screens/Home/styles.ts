@@ -8,6 +8,6 @@ justify-content: center;
 `
 
 export const Title = styled.Text`
-color: #FFF;
+color: ${({theme}) => theme.COLORS.BASE_500};
 font-size: 32px;
 `
