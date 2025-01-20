@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { MovieCard } from '../../Components/MovieCard';
 import { Container } from './styles';
 import { FlatList } from 'react-native';
+import { Input } from '../../Components/Input';
 
 type MovieProps = {
   id: string;
   title: string;
   genre: string;
 };
-
 
 export function Home() {
   const [movies, setMovies] = useState<MovieProps[]>([
@@ -24,18 +24,20 @@ export function Home() {
     { id: "10", title: "Spider-Man", genre: "Action" },
   ])
 
+  const renderMovieCard = ({ item }: { item: MovieProps }) => (
+    <MovieCard title={item.title} genre={item.genre} />
+  );
 
   return (
     <Container>
+        <Input placeholder="Search for a movie..."/>
+
         <FlatList 
         data={movies}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }: { item: MovieProps }) => (
-          <MovieCard title={item.title} genre={item.genre}/>
-        )}
+        renderItem={renderMovieCard}
         numColumns={3}
         horizontal={false}
-       
       />
     </Container>
   );
