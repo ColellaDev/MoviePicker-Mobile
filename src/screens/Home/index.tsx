@@ -1,9 +1,13 @@
-import { Container, Title } from './styles';
+import { MovieCard } from '../../Components/MovieCard';
+import { Container } from './styles';
+
 
 export function Home() {
   return (
     <Container>
-      <Title>Home</Title>
+      <MovieCard title="Velozes e Furiosos" genre='Ação'/>
+      <MovieCard title="Poderoso Chefão" genre='Ação'/>
+      <MovieCard title="Poderoso Chefão" genre='Ação'/>
     </Container>
   );
 }
