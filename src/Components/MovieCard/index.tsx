@@ -1,4 +1,5 @@
-import { Container, Poster, Raiting, Title } from "./styles";
+import { Container, Poster, Raiting, Title} from "./styles";
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 type Props = {
     title: string;
@@ -6,13 +7,12 @@ type Props = {
     raiting: number;
 }
 
-
 export function MovieCard({title, posterPath, raiting}: Props) {
     return(
         <Container>
-            <Poster source={{ uri: `https://image.tmdb.org/t/p/w300${posterPath}` }} />
+            <Poster source={{ uri: `https://image.tmdb.org/t/p/w300${posterPath}` }} />    
             <Raiting>
-                {raiting}
+            <Ionicons name="star" size={13} color="#FFD447" />  {raiting}
             </Raiting>
             <Title>
                 {title}

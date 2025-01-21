@@ -1,6 +1,7 @@
 import { TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 
+
 export const Container = styled(TouchableOpacity)`
     width: 120px;
     background-color: ${({theme}) => theme.COLORS.GRAY_500};
@@ -22,6 +23,7 @@ export const Title = styled.Text`
     font-size: 15px;
     text-align: center;
     margin-top: 5px;
+    font-family: ${({theme}) => theme.FONT_FAMILY.BOLD};
 `
 
 export const Raiting = styled.Text`
