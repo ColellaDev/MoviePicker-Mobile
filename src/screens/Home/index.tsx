@@ -3,6 +3,7 @@ import { MovieCard } from '../../Components/MovieCard';
 import { Container } from './styles';
 import { FlatList } from 'react-native';
 import { Input } from '../../Components/Input';
+import { Loading } from '../../Components/Loading';
 import { fetchPopularMovies } from '../../services/api';
 
 type MovieProps = {
@@ -14,6 +15,13 @@ type MovieProps = {
 
 export function Home() {
   const [movies, setMovies] = useState<MovieProps[]>([])
+  const [isloading, setIsloading] = useState<boolean>(true)
+
+  if(isloading) {
+    return(
+      <Loading/>
+    )
+  }
 
   const renderMovieCard = ({ item }: { item: MovieProps }) => (
     <MovieCard posterPath={item.poster_path} raiting={item.vote_average} title={item.title} />
@@ -24,13 +32,13 @@ export function Home() {
       try {
         const popularMovies = await fetchPopularMovies(); 
         setMovies(popularMovies)
-        
+       
       } catch (error) {
         console.error('Erro ao buscar filmes populares:', error);
       }
     };
-
     testApi(); 
+    setIsloading(false);
   }, []);
 
   return (
