@@ -17,29 +17,34 @@ export function Home() {
   const [movies, setMovies] = useState<MovieProps[]>([])
   const [isloading, setIsloading] = useState<boolean>(true)
 
-  if(isloading) {
-    return(
-      <Loading/>
-    )
-  }
+ 
 
   const renderMovieCard = ({ item }: { item: MovieProps }) => (
     <MovieCard posterPath={item.poster_path} raiting={item.vote_average} title={item.title} />
   );
 
   useEffect(() => {
-    const testApi = async () => {
+    const popularMovies = async () => {
       try {
         const popularMovies = await fetchPopularMovies(); 
         setMovies(popularMovies)
        
       } catch (error) {
         console.error('Erro ao buscar filmes populares:', error);
+      } finally {
+        setIsloading(false); 
       }
     };
-    testApi(); 
-    setIsloading(false);
+    
+    popularMovies(); 
+    
   }, []);
+
+  if(isloading) {
+    return(
+      <Loading/>
+    )
+  }
 
   return (
     <Container>
