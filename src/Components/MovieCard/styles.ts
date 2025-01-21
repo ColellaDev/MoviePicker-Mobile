@@ -24,10 +24,9 @@ export const Title = styled.Text`
     margin-top: 5px;
 `
 
-export const Genre = styled.Text`
+export const Raiting = styled.Text`
     color: ${({theme}) => theme.COLORS.BASE_500};
     font-size: 14px;
     text-align: center;
     margin-top: 2px;
-    
 `

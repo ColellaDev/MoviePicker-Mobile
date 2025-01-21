@@ -8,13 +8,15 @@ import { fetchPopularMovies } from '../../services/api';
 type MovieProps = {
   id: string;
   title: string;
+  poster_path: string;
+  vote_average: number;
 };
 
 export function Home() {
   const [movies, setMovies] = useState<MovieProps[]>([])
 
   const renderMovieCard = ({ item }: { item: MovieProps }) => (
-    <MovieCard title={item.title} />
+    <MovieCard posterPath={item.poster_path} raiting={item.vote_average} title={item.title} />
   );
 
   useEffect(() => {
@@ -22,6 +24,7 @@ export function Home() {
       try {
         const popularMovies = await fetchPopularMovies(); 
         setMovies(popularMovies)
+        
       } catch (error) {
         console.error('Erro ao buscar filmes populares:', error);
       }

@@ -1,14 +1,19 @@
-import { Container, Poster, Genre, Title } from "./styles";
+import { Container, Poster, Raiting, Title } from "./styles";
 
 type Props = {
     title: string;
+    posterPath: string;
+    raiting: number;
 }
 
 
-export function MovieCard({title}: Props) {
+export function MovieCard({title, posterPath, raiting}: Props) {
     return(
         <Container>
-            <Poster source={{ uri: "https://image.tmdb.org/t/p/w300/1E5baAaEse26fej7uHcjOgEE2t2.jpg" }}/>
+            <Poster source={{ uri: `https://image.tmdb.org/t/p/w300${posterPath}` }} />
+            <Raiting>
+                {raiting}
+            </Raiting>
             <Title>
                 {title}
             </Title>
