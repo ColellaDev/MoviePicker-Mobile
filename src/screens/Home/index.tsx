@@ -17,10 +17,11 @@ export function Home() {
   const [movies, setMovies] = useState<MovieProps[]>([])
   const [isloading, setIsloading] = useState<boolean>(true)
 
- 
-
   const renderMovieCard = ({ item }: { item: MovieProps }) => (
-    <MovieCard posterPath={item.poster_path} raiting={item.vote_average} title={item.title} />
+    <MovieCard
+       posterPath={item.poster_path}
+       raiting={Math.floor(item.vote_average * 10) / 10} 
+       title={item.title} />
   );
 
   useEffect(() => {
