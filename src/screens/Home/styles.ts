@@ -14,3 +14,10 @@ export const Header = styled.View`
     gap: 15px;
     margin-bottom: 15px;
 `
+
+export const Text = styled.Text`
+    flex: 1;
+    
+    color: ${({theme}) => theme.COLORS.BASE_400};
+
+`

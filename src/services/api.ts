@@ -14,4 +14,10 @@ export const api = axios.create({
 export const fetchPopularMovies = async (page: number = 1) => {
     const response = await api.get('/movie/popular', { params: { page } });
     return response.data.results;
-  };
+};
+
+export const fetchSearchMovies = async (query: string, page: number = 1) => {
+    const response = await api.get('/search/movie', { params: { query, page } });
+    return response.data.results;
+};
+  
