@@ -7,3 +7,10 @@ export const Container = styled.View`
     justify-content: center;
     padding-top: 50px; 
 `
+
+export const Header = styled.View`
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+`

@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { MovieCard } from '../../Components/MovieCard';
-import { Container } from './styles';
+import { Container, Header } from './styles';
 import { FlatList } from 'react-native';
 import { Input } from '../../Components/Input';
 import { Loading } from '../../Components/Loading';
+import { InputButton } from '../../Components/InputButton';
 import { fetchPopularMovies } from '../../services/api';
 
 type MovieProps = {
@@ -49,8 +50,12 @@ export function Home() {
 
   return (
     <Container>
+      <Header>
         <Input placeholder="Search for a movie..."/>
+        <InputButton/>
 
+      </Header>
+        
         <FlatList 
         data={movies}
         keyExtractor={(item) => item.id}
