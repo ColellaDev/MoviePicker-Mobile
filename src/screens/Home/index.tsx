@@ -1,18 +1,12 @@
 import { useEffect, useState } from 'react';
 import { MovieCard } from '../../Components/MovieCard';
+import { MovieProps } from '../../@types/movie';
 import { Container, Header, Text } from './styles';
 import { FlatList } from 'react-native';
 import { Input } from '../../Components/Input';
 import { Loading } from '../../Components/Loading';
 import { InputButton } from '../../Components/InputButton';
 import { fetchPopularMovies, fetchSearchMovies } from '../../services/api';
-
-type MovieProps = {
-  id: string;
-  title: string;
-  poster_path: string;
-  vote_average: number;
-};
 
 export function Home() {
   const [movies, setMovies] = useState<MovieProps[]>([])
