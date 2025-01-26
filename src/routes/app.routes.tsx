@@ -5,12 +5,13 @@ import { Favorites } from '../screens/Favorites';
 import { MovieDetails } from '../screens/MovieDetails';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useTheme } from "styled-components/native";
+import { MovieProps } from '../@types/movie';
 
 type AppRoutes = {
     home: undefined
     picker: undefined
     favorites: undefined
-    movieDetails: undefined
+    movieDetails: { movie: MovieProps }
   }
   
   export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>

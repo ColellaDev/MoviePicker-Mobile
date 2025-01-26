@@ -7,6 +7,8 @@ import { Input } from '../../Components/Input';
 import { Loading } from '../../Components/Loading';
 import { InputButton } from '../../Components/InputButton';
 import { fetchPopularMovies, fetchSearchMovies } from '../../services/api';
+import { useNavigation } from "@react-navigation/native";
+import { AppNavigatorRoutesProps } from '../../routes/app.routes';
 
 export function Home() {
   const [movies, setMovies] = useState<MovieProps[]>([])
@@ -14,12 +16,20 @@ export function Home() {
   const [searchMovie, setSearchMovie] = useState("");
   const [isSearching, setIsSearching] = useState(false);
 
+  const navigation = useNavigation<AppNavigatorRoutesProps>();
+
   const renderMovieCard = ({ item }: { item: MovieProps }) => (
     <MovieCard
        posterPath={item.poster_path}
        raiting={Math.floor(item.vote_average * 10) / 10} 
-       title={item.title} />
+       title={item.title}
+       onPress={() => handleMoviePress(item)}
+     />
   );
+
+  const handleMoviePress = (movie: MovieProps) => {
+    navigation.navigate("movieDetails", { movie });
+  };
 
   const handleSearch = async () => {
     if (!searchMovie.trim()) {
