@@ -1,4 +1,4 @@
-import { Container, Title, Banner, Poster, Raiting } from "./styles";
+import { Container, Main, Title, Information, Banner, Poster, Raiting, Text } from "./styles";
 import { useRoute } from "@react-navigation/native";
 import { MovieProps } from "../../@types/movie";
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -15,14 +15,33 @@ export function MovieDetails() {
 
     return (
         <Container>
-            <Banner></Banner>
+            <Banner source={{ uri: `https://image.tmdb.org/t/p/w400${movie.backdrop_path}` }}/>
+
+            <Main>
+
+            
             <Poster source={{ uri: `https://image.tmdb.org/t/p/w300${movie.poster_path}` }} />  
-            <Raiting>
-            <Ionicons name="star" size={13} color="#FFD447" />  {formattedVoteAverage}
-            </Raiting>
+            
+            <Information>
             <Title>
                 {movie.title}
             </Title>
+            <Raiting>
+           Nota:  <Ionicons name="star" size={13} color="#FFD447" />  {formattedVoteAverage}  ({movie.vote_count})
+            </Raiting>
+            <Text>
+                Título Original: {movie.original_title}
+            </Text>
+            <Text>
+                Data Lançamento: {movie.release_date}
+            </Text>
+            </Information>
+            </Main>
+
+
+            <Text>
+                Sinopse: {movie.overview} 
+            </Text>
         </Container>
     )
 }
