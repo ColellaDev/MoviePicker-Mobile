@@ -9,12 +9,14 @@ import { InputButton } from '../../Components/InputButton';
 import { fetchPopularMovies, fetchSearchMovies } from '../../services/api';
 import { useNavigation } from "@react-navigation/native";
 import { AppNavigatorRoutesProps } from '../../routes/app.routes';
+import { useIsFocused } from '@react-navigation/native';
 
 export function Home() {
   const [movies, setMovies] = useState<MovieProps[]>([])
   const [isloading, setIsloading] = useState<boolean>(true)
   const [searchMovie, setSearchMovie] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+  const isFocused = useIsFocused();
 
   const navigation = useNavigation<AppNavigatorRoutesProps>();
 
@@ -54,9 +56,11 @@ export function Home() {
       }
     };
     
-    popularMovies(); 
+    if (isFocused) {
+      popularMovies();
+    }
     
-  }, []);
+  }, [isFocused]);
 
   if(isloading) {
     return(
