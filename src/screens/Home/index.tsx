@@ -86,8 +86,8 @@ export function Home() {
         renderItem={renderMovieCard}
         numColumns={3}
         horizontal={false}
-        ListEmptyComponent={!isSearching ? (<Text>Nenhum filme encontrado.</Text>) : null} // Mensagem quando não há resultados
-        ListFooterComponent={isSearching ? <Loading /> : null} // Indicador de carregamento
+        ListEmptyComponent={!isSearching ? (<Text>Nenhum filme encontrado.</Text>) : null}
+        ListFooterComponent={isSearching ? <Loading /> : null}
       />
     </Container>
   );

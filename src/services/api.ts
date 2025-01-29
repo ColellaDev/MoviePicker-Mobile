@@ -20,4 +20,9 @@ export const fetchSearchMovies = async (query: string, page: number = 1) => {
     const response = await api.get('/search/movie', { params: { query, page } });
     return response.data.results;
 };
+
+export const fetchGenreMovies = async () =>{
+  const response = await api.get('/genre/movie/list');
+  return response.data.genres;
+}
   
