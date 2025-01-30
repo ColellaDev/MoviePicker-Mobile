@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import {
   Container,
   Main,
@@ -12,7 +11,7 @@ import {
 } from "./styles";
 import { useRoute } from "@react-navigation/native";
 import { MovieProps } from "../../@types/movie";
-import { fetchGenreMovies } from "../../services/api";
+import { useGenres } from "../../context/GenresContext";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 type RouteParams = {
@@ -20,28 +19,13 @@ type RouteParams = {
 };
 
 export function MovieDetails() {
-  const [genres, setGenres] = useState<{ id: number; name: string }[]>([]);
+
+  const { getGenres } = useGenres();
 
   const route = useRoute();
   const { movie } = route.params as RouteParams;
 
   const formattedVoteAverage = Math.floor(movie.vote_average * 10) / 10;
-
-  useEffect(() => {
-    const loadGenres = async () => {
-      const fetchedGenresMovies = await fetchGenreMovies();
-      setGenres(fetchedGenresMovies);
-    };
-
-    loadGenres();
-  }, []);
-
-  const getGenres = (genreIds: number[]) => {
-    return genreIds
-      .map((id) => genres.find((genre) => genre.id === id)?.name)
-      .filter(Boolean)
-      .join(", ");
-  };
 
   return (
     <Container>
