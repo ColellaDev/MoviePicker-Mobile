@@ -27,6 +27,11 @@ export function MovieDetails() {
 
   const formattedVoteAverage = Math.floor(movie.vote_average * 10) / 10;
 
+  const formatDate = (date: string) => {
+    const [year, month, day] = date.split("-");
+    return `${day}/${month}/${year.slice(-2)}`;
+  };
+
   return (
     <Container>
       <Banner
@@ -34,7 +39,7 @@ export function MovieDetails() {
           uri: `https://image.tmdb.org/t/p/w400${movie.backdrop_path}`,
         }}
       />
-      <Title>{movie.title}</Title>
+      <Title>{movie.title} ({movie.release_date.split("-")[0]})</Title>
       <Main>
         <Poster
           source={{
@@ -48,7 +53,7 @@ export function MovieDetails() {
             {formattedVoteAverage}  ( {movie.vote_count} )
           </Raiting>
           <Text>Título Original: {movie.original_title}</Text>
-          <Text>Data Lançamento: {movie.release_date}</Text>
+          <Text>Data Lançamento: {formatDate(movie.release_date)}</Text>
           <Text>Generos: {getGenres(movie.genre_ids)}</Text>
         </Information>
         
