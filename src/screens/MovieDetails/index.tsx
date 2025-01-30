@@ -7,7 +7,8 @@ import {
   Poster,
   Raiting,
   Text,
-  Overview
+  Overview,
+  Label,
 } from "./styles";
 import { useRoute } from "@react-navigation/native";
 import { MovieProps } from "../../@types/movie";
@@ -19,7 +20,6 @@ type RouteParams = {
 };
 
 export function MovieDetails() {
-
   const { getGenres } = useGenres();
 
   const route = useRoute();
@@ -39,7 +39,9 @@ export function MovieDetails() {
           uri: `https://image.tmdb.org/t/p/w400${movie.backdrop_path}`,
         }}
       />
-      <Title>{movie.title} ({movie.release_date.split("-")[0]})</Title>
+      <Title>
+        {movie.title} ({movie.release_date.split("-")[0]})
+      </Title>
       <Main>
         <Poster
           source={{
@@ -48,18 +50,26 @@ export function MovieDetails() {
         />
 
         <Information>
+          <Text>
+            <Label>Título Original</Label> {movie.original_title}
+          </Text>
+          <Text>
+            <Label>Data Lançamento</Label> {formatDate(movie.release_date)}
+          </Text>
           <Raiting>
-            Nota: <Ionicons name="star" size={13} color="#FFD447" />{" "}
-            {formattedVoteAverage}  ( {movie.vote_count} )
+            <Label>Nota</Label>{"  "}
+            <Ionicons name="star" size={12} color="#FFD447" />{" "}
+            {formattedVoteAverage} ( {movie.vote_count} )
           </Raiting>
-          <Text>Título Original: {movie.original_title}</Text>
-          <Text>Data Lançamento: {formatDate(movie.release_date)}</Text>
-          <Text>Generos: {getGenres(movie.genre_ids)}</Text>
+          <Text>
+            <Label>Gêneros</Label> {getGenres(movie.genre_ids)}
+          </Text>
         </Information>
-        
       </Main>
-      <Overview>Sinopse: {movie.overview}</Overview>
-      
+      <Overview>
+        <Label style={{ fontSize: 20 }}>Sinopse</Label> 
+        <Text>{movie.overview}</Text>
+      </Overview>
     </Container>
   );
 }
