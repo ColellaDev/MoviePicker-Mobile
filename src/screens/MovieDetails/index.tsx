@@ -40,7 +40,7 @@ export function MovieDetails() {
         }}
       />
       <Title>
-        {movie.title} ({movie.release_date.split("-")[0]})
+        {movie.title || movie.name} ({(movie.release_date ? movie.release_date.split("-")[0] : movie.first_air_date?.split("-")[0])})
       </Title>
       <Main>
         <Poster
@@ -51,10 +51,10 @@ export function MovieDetails() {
 
         <Information>
           <Text>
-            <Label>Título Original</Label> {movie.original_title}
+            <Label>Título Original</Label> {movie.original_title || movie.original_name}
           </Text>
           <Text>
-            <Label>Data Lançamento</Label> {formatDate(movie.release_date)}
+            <Label>Data Lançamento</Label> {formatDate(movie.release_date || movie.first_air_date)}
           </Text>
           <Raiting>
             <Label>Nota</Label>

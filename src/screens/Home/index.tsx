@@ -6,7 +6,7 @@ import { FlatList } from "react-native";
 import { Input } from "../../Components/Input";
 import { Loading } from "../../Components/Loading";
 import { InputButton } from "../../Components/InputButton";
-import { fetchPopularMovies, fetchSearchMovies, fetchRatedMovies, fetchNowPlayingMovies, fetchUpcomingMovies } from "../../services/api";
+import { fetchPopularMovies, fetchSearchMovies, fetchRatedMovies, fetchNowPlayingMovies, fetchUpcomingMovies, fetchPopularTv, fetchRatedTv, fetchNowPlayingTv, fetchUpcomingTv } from "../../services/api";
 import { useNavigation } from "@react-navigation/native";
 import { AppNavigatorRoutesProps } from "../../routes/app.routes";
 import { useIsFocused } from "@react-navigation/native";
@@ -16,6 +16,7 @@ export function Home() {
   const [isloading, setIsloading] = useState<boolean>(true);
   const [searchMovie, setSearchMovie] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+  const [media, setMedia] = useState<"movie" | "tv">("movie");
   const [category, setCategory] = useState<"popular" | "top_rated" | "now_playing" | "upcoming">("popular");
   const isFocused = useIsFocused();
 
@@ -25,7 +26,7 @@ export function Home() {
     <MovieCard
       posterPath={item.poster_path}
       raiting={Math.floor(item.vote_average * 10) / 10}
-      title={item.title}
+      title={item.title || item.name}
       onPress={() => handleMoviePress(item)}
     />
   );
@@ -44,18 +45,26 @@ export function Home() {
     setIsSearching(false);
   };
 
-  const fetchMoviesByCategory = {
-    popular: fetchPopularMovies,
-    top_rated: fetchRatedMovies,
-    now_playing: fetchNowPlayingMovies,
-    upcoming: fetchUpcomingMovies
+  const fetchMediaByCategory = {
+    movie: {
+      popular: fetchPopularMovies,
+      top_rated: fetchRatedMovies,
+      now_playing: fetchNowPlayingMovies,
+      upcoming: fetchUpcomingMovies
+    },
+    tv: {
+      popular: fetchPopularTv,
+      top_rated: fetchRatedTv,
+      now_playing: fetchNowPlayingTv,
+      upcoming: fetchUpcomingTv
+    }
   };
 
   useEffect(() => {
-    const fetchMovies = async () => {
+    const fetchMedia = async () => {
       try {
-        const fechedMovies  = await fetchMoviesByCategory[category]();
-        setMovies(fechedMovies);
+        const fechedMedia = await fetchMediaByCategory[media][category]();
+        setMovies(fechedMedia);
       } catch (error) {
         console.error("Erro ao buscar filmes populares:", error);
       } finally {
@@ -64,9 +73,9 @@ export function Home() {
     };
 
     if (isFocused) {
-      fetchMovies();
+      fetchMedia();
     }
-  }, [isFocused, category]);
+  }, [isFocused, category, media]);
 
   if (isloading) {
     return <Loading />;
@@ -83,6 +92,16 @@ export function Home() {
         />
         <InputButton onPress={handleSearch} />
       </Header>
+
+      <CategoryContainer>
+        <CategoryButton isActive={media === "movie"} onPress={() => setMedia("movie")}>
+          <CategoryButtonText isActive={media === "movie"}>Movie</CategoryButtonText>
+        </CategoryButton>
+
+        <CategoryButton isActive={media === "tv"} onPress={() => setMedia("tv")}>
+          <CategoryButtonText isActive={media === "tv"}>Tv</CategoryButtonText>
+        </CategoryButton>
+      </CategoryContainer>
 
       <CategoryContainer>
         <CategoryButton isActive={category === "popular"} onPress={() => setCategory("popular")}>
