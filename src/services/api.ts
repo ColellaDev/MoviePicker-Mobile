@@ -25,3 +25,18 @@ export const fetchGenreMovies = async () => {
   const response = await api.get("/genre/movie/list");
   return response.data.genres;
 };
+
+export const fetchRatedMovies = async (page: number = 1) => {
+  const response = await api.get("/movie/top_rated", { params: { page } });
+  return response.data.results;
+};
+
+export const fetchNowPlayingMovies = async (page: number = 1) => {
+  const response = await api.get("/movie/now_playing", { params: { page } });
+  return response.data.results;
+};
+
+export const fetchUpcomingMovies = async (page: number = 1) => {
+  const response = await api.get("/movie/upcoming", { params: { page } });
+  return response.data.results;
+};

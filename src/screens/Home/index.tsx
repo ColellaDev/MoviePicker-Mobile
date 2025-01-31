@@ -6,7 +6,7 @@ import { FlatList } from "react-native";
 import { Input } from "../../Components/Input";
 import { Loading } from "../../Components/Loading";
 import { InputButton } from "../../Components/InputButton";
-import { fetchPopularMovies, fetchSearchMovies } from "../../services/api";
+import { fetchPopularMovies, fetchSearchMovies, fetchRatedMovies, fetchNowPlayingMovies, fetchUpcomingMovies } from "../../services/api";
 import { useNavigation } from "@react-navigation/native";
 import { AppNavigatorRoutesProps } from "../../routes/app.routes";
 import { useIsFocused } from "@react-navigation/native";
@@ -16,7 +16,7 @@ export function Home() {
   const [isloading, setIsloading] = useState<boolean>(true);
   const [searchMovie, setSearchMovie] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-  const [category, setCategory] = useState<"popular" | "top_rated" | "now_playing">("popular");
+  const [category, setCategory] = useState<"popular" | "top_rated" | "now_playing" | "upcoming">("popular");
   const isFocused = useIsFocused();
 
   const navigation = useNavigation<AppNavigatorRoutesProps>();
@@ -44,11 +44,18 @@ export function Home() {
     setIsSearching(false);
   };
 
+  const fetchMoviesByCategory = {
+    popular: fetchPopularMovies,
+    top_rated: fetchRatedMovies,
+    now_playing: fetchNowPlayingMovies,
+    upcoming: fetchUpcomingMovies
+  };
+
   useEffect(() => {
-    const popularMovies = async () => {
+    const fetchMovies = async () => {
       try {
-        const popularMovies = await fetchPopularMovies();
-        setMovies(popularMovies);
+        const fechedMovies  = await fetchMoviesByCategory[category]();
+        setMovies(fechedMovies);
       } catch (error) {
         console.error("Erro ao buscar filmes populares:", error);
       } finally {
@@ -57,9 +64,9 @@ export function Home() {
     };
 
     if (isFocused) {
-      popularMovies();
+      fetchMovies();
     }
-  }, [isFocused]);
+  }, [isFocused, category]);
 
   if (isloading) {
     return <Loading />;
@@ -88,6 +95,10 @@ export function Home() {
 
         <CategoryButton isActive={category === "now_playing"} onPress={() => setCategory("now_playing")}>
           <CategoryButtonText isActive={category === "now_playing"}>Now Playing</CategoryButtonText>
+        </CategoryButton>
+
+        <CategoryButton isActive={category === "upcoming"} onPress={() => setCategory("upcoming")}>
+          <CategoryButtonText isActive={category === "upcoming"}>Upcoming</CategoryButtonText>
         </CategoryButton>
       </CategoryContainer>
 

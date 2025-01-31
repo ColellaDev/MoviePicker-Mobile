@@ -22,14 +22,14 @@ export const Text = styled.Text`
 export const CategoryContainer = styled.View`
   flex-direction: row;
   margin-bottom: 15px;
-  gap: 30px;
+  gap: 10px;
 `
 
 export const CategoryButton = styled.TouchableOpacity<{ isActive: boolean }>`
-  background-color: ${({theme, isActive}) => isActive ? theme.COLORS.GRAY_300 : theme.COLORS.GRAY_400};
+  background-color: ${({theme, isActive}) => isActive ? theme.COLORS.GRAY_400 : theme.COLORS.GRAY_300};
   border: 1px;
-  border-color: ${({theme, isActive}) => isActive ? theme.COLORS.BASE_500 : theme.COLORS.BASE_500};
-  padding: 5px 10px;
+  border-color: ${({theme, isActive}) => isActive ? theme.COLORS.BASE_500 : theme.COLORS.GRAY_400};
+  padding: 4px 8px;
   border-radius: 8px;
 `
 
