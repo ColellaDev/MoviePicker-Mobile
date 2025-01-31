@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { MovieCard } from "../../Components/MovieCard";
 import { MovieProps } from "../../@types/movie";
-import { Container, Header, Text } from "./styles";
+import { Container, Header, Text, CategoryContainer, CategoryButton, CategoryButtonText } from "./styles";
 import { FlatList } from "react-native";
 import { Input } from "../../Components/Input";
 import { Loading } from "../../Components/Loading";
@@ -16,6 +16,7 @@ export function Home() {
   const [isloading, setIsloading] = useState<boolean>(true);
   const [searchMovie, setSearchMovie] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+  const [category, setCategory] = useState<"popular" | "top_rated" | "now_playing">("popular");
   const isFocused = useIsFocused();
 
   const navigation = useNavigation<AppNavigatorRoutesProps>();
@@ -75,6 +76,20 @@ export function Home() {
         />
         <InputButton onPress={handleSearch} />
       </Header>
+
+      <CategoryContainer>
+        <CategoryButton isActive={category === "popular"} onPress={() => setCategory("popular")}>
+          <CategoryButtonText isActive={category === "popular"}>Popular</CategoryButtonText>
+        </CategoryButton>
+
+        <CategoryButton isActive={category === "top_rated"} onPress={() => setCategory("top_rated")}>
+          <CategoryButtonText isActive={category === "top_rated"}>Top Rated</CategoryButtonText>
+        </CategoryButton>
+
+        <CategoryButton isActive={category === "now_playing"} onPress={() => setCategory("now_playing")}>
+          <CategoryButtonText isActive={category === "now_playing"}>Now Playing</CategoryButtonText>
+        </CategoryButton>
+      </CategoryContainer>
 
       <FlatList
         data={movies}

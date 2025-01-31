@@ -16,6 +16,24 @@ export const Header = styled.View`
 `;
 
 export const Text = styled.Text`
-  flex: 1;
   color: ${({ theme }) => theme.COLORS.BASE_400};
 `;
+
+export const CategoryContainer = styled.View`
+  flex-direction: row;
+  margin-bottom: 15px;
+  gap: 30px;
+`
+
+export const CategoryButton = styled.TouchableOpacity<{ isActive: boolean }>`
+  background-color: ${({theme, isActive}) => isActive ? theme.COLORS.GRAY_300 : theme.COLORS.GRAY_400};
+  border: 1px;
+  border-color: ${({theme, isActive}) => isActive ? theme.COLORS.BASE_500 : theme.COLORS.BASE_500};
+  padding: 5px 10px;
+  border-radius: 8px;
+`
+
+export const CategoryButtonText = styled.Text<{ isActive: boolean }>`
+  color: ${({theme, isActive}) => isActive ? theme.COLORS.BASE_500 : theme.COLORS.WHITE};
+  font-weight: bold;
+`
