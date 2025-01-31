@@ -57,7 +57,8 @@ export function MovieDetails() {
             <Label>Data Lançamento</Label> {formatDate(movie.release_date)}
           </Text>
           <Raiting>
-            <Label>Nota</Label>{"  "}
+            <Label>Nota</Label>
+            {"  "}
             <Ionicons name="star" size={12} color="#FFD447" />{" "}
             {formattedVoteAverage} ( {movie.vote_count} )
           </Raiting>
@@ -67,7 +68,7 @@ export function MovieDetails() {
         </Information>
       </Main>
       <Overview>
-        <Label style={{ fontSize: 20 }}>Sinopse</Label> 
+        <Label style={{ fontSize: 20 }}>Sinopse</Label>
         <Text>{movie.overview}</Text>
       </Overview>
     </Container>
