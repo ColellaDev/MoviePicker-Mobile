@@ -21,6 +21,11 @@ export const fetchSearchMovies = async (query: string, page: number = 1) => {
   return response.data.results;
 };
 
+export const fetchSearchTv = async (query: string, page: number = 1) => {
+  const response = await api.get("/search/tv", { params: { query, page } });
+  return response.data.results;
+};
+
 export const fetchPopularMovies = async (page: number = 1) => {
   const response = await api.get("/movie/popular", { params: { page } });
   return response.data.results;

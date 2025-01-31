@@ -6,7 +6,7 @@ import { FlatList } from "react-native";
 import { Input } from "../../Components/Input";
 import { Loading } from "../../Components/Loading";
 import { InputButton } from "../../Components/InputButton";
-import { fetchPopularMovies, fetchSearchMovies, fetchRatedMovies, fetchNowPlayingMovies, fetchUpcomingMovies, fetchPopularTv, fetchRatedTv, fetchNowPlayingTv, fetchUpcomingTv } from "../../services/api";
+import { fetchPopularMovies, fetchSearchMovies, fetchRatedMovies, fetchNowPlayingMovies, fetchUpcomingMovies, fetchPopularTv, fetchRatedTv, fetchNowPlayingTv, fetchUpcomingTv, fetchSearchTv } from "../../services/api";
 import { useNavigation } from "@react-navigation/native";
 import { AppNavigatorRoutesProps } from "../../routes/app.routes";
 import { useIsFocused } from "@react-navigation/native";
@@ -40,8 +40,13 @@ export function Home() {
       return;
     }
     setIsSearching(true);
-    const searchResults = await fetchSearchMovies(searchMovie);
-    setMovies(searchResults);
+    const [moviesResults, seriesResults ] = await Promise.all ([
+      fetchSearchMovies(searchMovie),
+      fetchSearchTv(searchMovie),
+    ]) 
+    const combinedResults = [...moviesResults, ...seriesResults];
+    setMovies(combinedResults);
+    setSearchMovie("");
     setIsSearching(false);
   };
 
@@ -99,7 +104,7 @@ export function Home() {
         </CategoryButton>
 
         <CategoryButton isActive={media === "tv"} onPress={() => setMedia("tv")}>
-          <CategoryButtonText isActive={media === "tv"}>Tv</CategoryButtonText>
+          <CategoryButtonText isActive={media === "tv"}>Series</CategoryButtonText>
         </CategoryButton>
       </CategoryContainer>
 
