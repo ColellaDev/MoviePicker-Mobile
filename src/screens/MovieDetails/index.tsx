@@ -9,6 +9,8 @@ import {
   Text,
   Overview,
   Label,
+  FavoriteButton,
+  TextButton,
 } from "./styles";
 import { useRoute } from "@react-navigation/native";
 import { MovieProps } from "../../@types/movie";
@@ -71,6 +73,9 @@ export function MovieDetails() {
         <Label style={{ fontSize: 20 }}>Sinopse</Label>
         <Text>{movie.overview}</Text>
       </Overview>
+      <FavoriteButton>
+        <TextButton>Adicionar Favoritos</TextButton>
+      </FavoriteButton>
     </Container>
   );
 }

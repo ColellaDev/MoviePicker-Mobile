@@ -59,3 +59,19 @@ export const Label = styled.Text`
   font-weight: bold;
   font-size: 15px;
 `;
+
+export const FavoriteButton = styled.TouchableOpacity`
+  background-color: ${({theme}) => theme.COLORS.GRAY_400};
+  width: 200px;
+  border: 2px;
+  border-color: ${({ theme }) => theme.COLORS.BASE_500};
+  border-radius: 10px;
+  margin-top: 12px;
+  padding: 5px;
+  align-self: center;
+  align-items: center;
+`
+export const TextButton = styled.Text`
+  color: ${({ theme }) => theme.COLORS.BASE_500};
+  font-weight: bold;
+`
