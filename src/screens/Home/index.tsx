@@ -87,7 +87,7 @@ export function Home() {
         isLoading ? <Loading/> :
       <FlatList
         data={movies}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={renderMovieCard}
         numColumns={3}
         horizontal={false}

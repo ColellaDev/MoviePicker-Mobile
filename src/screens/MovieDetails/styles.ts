@@ -60,18 +60,40 @@ export const Label = styled.Text`
   font-size: 15px;
 `;
 
-export const FavoriteButton = styled.TouchableOpacity`
-  background-color: ${({theme}) => theme.COLORS.GRAY_400};
-  width: 200px;
-  border: 2px;
-  border-color: ${({ theme }) => theme.COLORS.BASE_500};
+export const FavoriteButton = styled.TouchableOpacity<{isFavorite:boolean}>`
+  background-color: ${({theme, isFavorite}) => isFavorite ? theme.COLORS.RED : theme.COLORS.GRAY_400 };
+  flex-direction: row;
+  width: 180px;
+  border: 1px;
+  border-color: ${({ theme, isFavorite }) => isFavorite ? theme.COLORS.WHITE : theme.COLORS.BASE_500 };
   border-radius: 10px;
-  margin-top: 12px;
+  margin-top: 15px;
   padding: 5px;
+  gap: 10px;
   align-self: center;
   align-items: center;
+  justify-content: center;
 `
-export const TextButton = styled.Text`
-  color: ${({ theme }) => theme.COLORS.BASE_500};
+export const FavoriteTextButton = styled.Text<{isFavorite:boolean}>`
+  color: ${({ theme, isFavorite }) => isFavorite ? theme.COLORS.WHITE : theme.COLORS.BASE_500 };
+  font-weight: bold;
+`
+
+export const PickerButton = styled.TouchableOpacity<{isPicker:boolean}>`
+  background-color: ${({theme, isPicker}) => isPicker ? theme.COLORS.RED : theme.COLORS.GRAY_400 };
+  flex-direction: row;
+  width: 180px;
+  border: 1px;
+  border-color: ${({ theme, isPicker }) => isPicker ? theme.COLORS.WHITE : theme.COLORS.BASE_500 };
+  border-radius: 10px;
+  margin-top: 15px;
+  padding: 5px;
+  gap: 10px;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+`
+export const PickerTextButton = styled.Text<{isPicker:boolean}>`
+  color: ${({ theme, isPicker }) => isPicker ? theme.COLORS.WHITE : theme.COLORS.BASE_500 };
   font-weight: bold;
 `

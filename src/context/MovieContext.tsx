@@ -7,10 +7,16 @@ import {
 
 type MovieContextData = {
   movies: MovieProps[];
+  favorites: MovieProps[];
+  picker: MovieProps[];
   setMovies: (movies: MovieProps[]) => void;
   isLoading: boolean;
   fetchMoviesByCategory: (media: "movie" | "tv", category: "popular" | "top_rated" | "now_playing" | "upcoming") => Promise<void>;
   searchMovies: (query: string) => Promise<void>;
+  addFavorite: (movie:MovieProps) => void;
+  removeFavorite: (id:number) => void;
+  addPicker: (movie:MovieProps) => void;
+  removePicker: (id:number) => void;
 };
 
 const MovieContext = createContext<MovieContextData>({} as MovieContextData);
@@ -18,6 +24,24 @@ const MovieContext = createContext<MovieContextData>({} as MovieContextData);
 export function MovieProvider({ children }: { children: ReactNode }) {
   const [movies, setMovies] = useState<MovieProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [favorites, setFavorites] = useState<MovieProps[]>([]);
+  const [picker, setPicker] = useState<MovieProps[]>([]);
+
+  const addFavorite = (movie:MovieProps) => {
+    setFavorites( (prev) => [...prev, movie])
+  }
+
+  const removeFavorite = (id:number) => {
+    setFavorites((prev) => prev.filter((movie) => movie.id !== id));
+  }
+
+  const addPicker = (movie:MovieProps) => {
+    setFavorites( (prev) => [...prev, movie])
+  }
+
+  const removePicker = (id:number) => {
+    setFavorites((prev) => prev.filter((movie) => movie.id !== id));
+  }
 
   const fetchMediaByCategory = {
     movie: {
@@ -63,7 +87,7 @@ export function MovieProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <MovieContext.Provider value={{ movies, setMovies, isLoading, fetchMoviesByCategory, searchMovies }}>
+    <MovieContext.Provider value={{ movies, setMovies, isLoading, fetchMoviesByCategory, searchMovies, addFavorite, removeFavorite, favorites, addPicker, removePicker, picker }}>
       {children}
     </MovieContext.Provider>
   );

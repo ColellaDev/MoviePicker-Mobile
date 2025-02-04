@@ -10,12 +10,15 @@ import {
   Overview,
   Label,
   FavoriteButton,
-  TextButton,
+  FavoriteTextButton,
+  PickerButton,
+  PickerTextButton
 } from "./styles";
 import { useRoute } from "@react-navigation/native";
 import { MovieProps } from "../../@types/movie";
 import { useGenres } from "../../context/GenresContext";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useMovieContext } from "../../context/MovieContext";
 
 type RouteParams = {
   movie: MovieProps;
@@ -25,6 +28,10 @@ export function MovieDetails() {
   const { getGenres } = useGenres();
   const route = useRoute();
   const { movie } = route.params as RouteParams;
+  const { addFavorite, removeFavorite, favorites, addPicker, removePicker, picker } = useMovieContext();
+
+  const isFavorite = favorites.some((fav) => fav.id == movie.id);
+  const isPicker = picker.some((fav) => fav.id == movie.id);
 
   const formattedVoteAverage = Math.floor(movie.vote_average * 10) / 10;
 
@@ -41,7 +48,11 @@ export function MovieDetails() {
         }}
       />
       <Title>
-        {movie.title || movie.name} ({(movie.release_date ? movie.release_date.split("-")[0] : movie.first_air_date?.split("-")[0])})
+        {movie.title || movie.name} (
+        {movie.release_date
+          ? movie.release_date.split("-")[0]
+          : movie.first_air_date?.split("-")[0]}
+        )
       </Title>
       <Main>
         <Poster
@@ -52,10 +63,12 @@ export function MovieDetails() {
 
         <Information>
           <Text>
-            <Label>Título Original</Label> {movie.original_title || movie.original_name}
+            <Label>Título Original</Label>{" "}
+            {movie.original_title || movie.original_name}
           </Text>
           <Text>
-            <Label>Data Lançamento</Label> {formatDate(movie.release_date || movie.first_air_date)}
+            <Label>Data Lançamento</Label>{" "}
+            {formatDate(movie.release_date || movie.first_air_date)}
           </Text>
           <Raiting>
             <Label>Nota</Label>
@@ -72,9 +85,35 @@ export function MovieDetails() {
         <Label style={{ fontSize: 20 }}>Sinopse</Label>
         <Text>{movie.overview}</Text>
       </Overview>
-      <FavoriteButton>
-        <TextButton>Adicionar Favoritos</TextButton>
+      <FavoriteButton isFavorite={isFavorite}
+        onPress={() => {
+          isFavorite ? removeFavorite(movie.id) : addFavorite(movie);
+        }}
+      >
+        {isFavorite ? (
+          <Ionicons name="trash" size={17} color="#FFF" />
+        ) : (
+          <Ionicons name="heart" size={19} color="#F75A68" />
+        )}
+        <FavoriteTextButton isFavorite={isFavorite}>
+          {isFavorite ? "Remover Favoritos" : "Adicionar Favoritos"}
+        </FavoriteTextButton>
       </FavoriteButton>
+
+      <PickerButton isPicker={isPicker}
+        onPress={() => {
+          //isPicker ? removeFavorite(movie.id) : addFavorite(movie);
+        }}
+      >
+        {isPicker ? (
+          <Ionicons name="trash" size={17} color="#FFF" />
+        ) : (
+          <Ionicons name="dice" size={20} color="#FFD447" />
+        )}
+        <PickerTextButton isPicker={isPicker}>
+          {isPicker ? "Remover Picker" : "Adicionar Picker"}
+        </PickerTextButton>
+      </PickerButton>
     </Container>
   );
 }
