@@ -23,7 +23,6 @@ type RouteParams = {
 
 export function MovieDetails() {
   const { getGenres } = useGenres();
-
   const route = useRoute();
   const { movie } = route.params as RouteParams;
 

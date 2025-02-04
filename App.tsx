@@ -7,6 +7,7 @@ import {
 import { StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { GenresProvider } from "./src/context/GenresContext";
+import { MovieProvider } from "./src/context/MovieContext";
 
 import theme from "./src/theme";
 
@@ -19,14 +20,16 @@ export default function App() {
   return (
     <NavigationContainer>
       <ThemeProvider theme={theme}>
-        <GenresProvider>
-          <StatusBar
-            barStyle="light-content"
-            backgroundColor="transparent"
-            translucent
-          />
-          {fontsLoaded ? <AppRoutes /> : <Loading />}
-        </GenresProvider>
+        <MovieProvider>
+          <GenresProvider>
+            <StatusBar
+              barStyle="light-content"
+              backgroundColor="transparent"
+              translucent
+            />
+            {fontsLoaded ? <AppRoutes /> : <Loading />}
+          </GenresProvider>
+        </MovieProvider>
       </ThemeProvider>
     </NavigationContainer>
   );

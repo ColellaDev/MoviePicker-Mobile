@@ -6,20 +6,17 @@ import { FlatList } from "react-native";
 import { Input } from "../../Components/Input";
 import { Loading } from "../../Components/Loading";
 import { InputButton } from "../../Components/InputButton";
-import { fetchPopularMovies, fetchSearchMovies, fetchRatedMovies, fetchNowPlayingMovies, fetchUpcomingMovies, fetchPopularTv, fetchRatedTv, fetchNowPlayingTv, fetchUpcomingTv, fetchSearchTv } from "../../services/api";
 import { useNavigation } from "@react-navigation/native";
 import { AppNavigatorRoutesProps } from "../../routes/app.routes";
 import { useIsFocused } from "@react-navigation/native";
+import { useMovieContext } from "../../context/MovieContext";
 
 export function Home() {
-  const [movies, setMovies] = useState<MovieProps[]>([]);
-  const [isloading, setIsloading] = useState<boolean>(true);
+  const { movies, isLoading, fetchMoviesByCategory, searchMovies } = useMovieContext();
   const [searchMovie, setSearchMovie] = useState("");
-  const [isSearching, setIsSearching] = useState(false);
   const [media, setMedia] = useState<"movie" | "tv">("movie");
   const [category, setCategory] = useState<"popular" | "top_rated" | "now_playing" | "upcoming">("popular");
   const isFocused = useIsFocused();
-
   const navigation = useNavigation<AppNavigatorRoutesProps>();
 
   const renderMovieCard = ({ item }: { item: MovieProps }) => (
@@ -27,64 +24,25 @@ export function Home() {
       posterPath={item.poster_path}
       raiting={Math.floor(item.vote_average * 10) / 10}
       title={item.title || item.name}
-      onPress={() => handleMoviePress(item)}
+      onPress={() => navigation.navigate("movieDetails", { movie: item })}
     />
   );
 
-  const handleMoviePress = (movie: MovieProps) => {
-    navigation.navigate("movieDetails", { movie });
-  };
-
   const handleSearch = async () => {
-    if (!searchMovie.trim()) {
-      return;
-    }
-    setIsSearching(true);
-    const [moviesResults, seriesResults ] = await Promise.all ([
-      fetchSearchMovies(searchMovie),
-      fetchSearchTv(searchMovie),
-    ]) 
-    const combinedResults = [...moviesResults, ...seriesResults];
-    setMovies(combinedResults);
+    if (!searchMovie.trim()) return;
+    await searchMovies(searchMovie);
     setSearchMovie("");
-    setIsSearching(false);
-  };
-
-  const fetchMediaByCategory = {
-    movie: {
-      popular: fetchPopularMovies,
-      top_rated: fetchRatedMovies,
-      now_playing: fetchNowPlayingMovies,
-      upcoming: fetchUpcomingMovies
-    },
-    tv: {
-      popular: fetchPopularTv,
-      top_rated: fetchRatedTv,
-      now_playing: fetchNowPlayingTv,
-      upcoming: fetchUpcomingTv
-    }
   };
 
   useEffect(() => {
     const fetchMedia = async () => {
-      try {
-        const fechedMedia = await fetchMediaByCategory[media][category]();
-        setMovies(fechedMedia);
-      } catch (error) {
-        console.error("Erro ao buscar filmes populares:", error);
-      } finally {
-        setIsloading(false);
-      }
+      await fetchMoviesByCategory(media, category);
     };
 
     if (isFocused) {
       fetchMedia();
     }
   }, [isFocused, category, media]);
-
-  if (isloading) {
-    return <Loading />;
-  }
 
   return (
     <Container>
@@ -125,18 +83,18 @@ export function Home() {
           <CategoryButtonText isActive={category === "upcoming"}>Upcoming</CategoryButtonText>
         </CategoryButton>
       </CategoryContainer>
-
+      {
+        isLoading ? <Loading/> :
       <FlatList
         data={movies}
         keyExtractor={(item) => item.id}
         renderItem={renderMovieCard}
         numColumns={3}
         horizontal={false}
-        ListEmptyComponent={
-          !isSearching ? <Text>Nenhum filme encontrado.</Text> : null
-        }
-        ListFooterComponent={isSearching ? <Loading /> : null}
+        ListEmptyComponent={!isLoading ? <Text>Nenhum filme encontrado.</Text> : null}
+        ListFooterComponent={isLoading ? <Loading /> : null}
       />
+    }
     </Container>
   );
 }
