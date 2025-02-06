@@ -117,7 +117,7 @@ export function MovieDetails() {
         <PickerButton
           isPicker={isPicker}
           onPress={() => {
-            //isPicker ? removeFavorite(movie.id) : addFavorite(movie);
+            isPicker ? removePicker(movie.id) : addPicker(movie);
           }}
         >
           {isPicker ? (
