@@ -72,7 +72,7 @@ export function Home() {
       {
         isLoading ? <Loading/> :
       <MovieList data={movies} emptyMessage={"Nenhum filme encontrado"}/>
-    }
+      }
     </Container>
   );
 }
