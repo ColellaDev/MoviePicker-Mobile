@@ -1,9 +1,14 @@
-import { Container, Text } from "./styles";
+import { Container} from "./styles";
+import { useMovieContext } from "../../context/MovieContext";
+import { MovieList } from "../../Components/MovieList"; 
 
 export function Favorites() {
+
+  const { favorites } = useMovieContext();
+
   return (
     <Container>
-      <Text>Tela Favoritos</Text>
+      <MovieList data={favorites}/>
     </Container>
   );
 }

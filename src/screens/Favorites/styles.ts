@@ -7,7 +7,3 @@ export const Container = styled.View`
   justify-content: center;
   padding-top: 50px;
 `;
-
-export const Text = styled.Text`
-  color: ${({ theme }) => theme.COLORS.BASE_400};
-`;

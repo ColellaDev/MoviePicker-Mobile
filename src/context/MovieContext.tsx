@@ -36,11 +36,11 @@ export function MovieProvider({ children }: { children: ReactNode }) {
   }
 
   const addPicker = (movie:MovieProps) => {
-    setFavorites( (prev) => [...prev, movie])
+    setPicker( (prev) => [...prev, movie])
   }
 
   const removePicker = (id:number) => {
-    setFavorites((prev) => prev.filter((movie) => movie.id !== id));
+    setPicker((prev) => prev.filter((movie) => movie.id !== id));
   }
 
   const fetchMediaByCategory = {
