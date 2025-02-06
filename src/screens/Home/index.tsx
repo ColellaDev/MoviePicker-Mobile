@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
-import { MovieCard } from "../../Components/MovieCard";
-import { MovieProps } from "../../@types/movie";
 import { Container, Header, Text, CategoryContainer, CategoryButton, CategoryButtonText } from "./styles";
-import { FlatList } from "react-native";
 import { Input } from "../../Components/Input";
 import { Loading } from "../../Components/Loading";
 import { InputButton } from "../../Components/InputButton";
-import { useNavigation } from "@react-navigation/native";
-import { AppNavigatorRoutesProps } from "../../routes/app.routes";
 import { useIsFocused } from "@react-navigation/native";
 import { useMovieContext } from "../../context/MovieContext";
+import { MovieList } from "../../Components/MovieList";
 
 export function Home() {
   const { movies, isLoading, fetchMoviesByCategory, searchMovies } = useMovieContext();
@@ -17,16 +13,6 @@ export function Home() {
   const [media, setMedia] = useState<"movie" | "tv">("movie");
   const [category, setCategory] = useState<"popular" | "top_rated" | "now_playing" | "upcoming">("popular");
   const isFocused = useIsFocused();
-  const navigation = useNavigation<AppNavigatorRoutesProps>();
-
-  const renderMovieCard = ({ item }: { item: MovieProps }) => (
-    <MovieCard
-      posterPath={item.poster_path}
-      raiting={Math.floor(item.vote_average * 10) / 10}
-      title={item.title || item.name}
-      onPress={() => navigation.navigate("movieDetails", { movie: item })}
-    />
-  );
 
   const handleSearch = async () => {
     if (!searchMovie.trim()) return;
@@ -85,15 +71,7 @@ export function Home() {
       </CategoryContainer>
       {
         isLoading ? <Loading/> :
-      <FlatList
-        data={movies}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={renderMovieCard}
-        numColumns={3}
-        horizontal={false}
-        ListEmptyComponent={!isLoading ? <Text>Nenhum filme encontrado.</Text> : null}
-        ListFooterComponent={isLoading ? <Loading /> : null}
-      />
+      <MovieList data={movies} emptyMessage={"Nenhum filme encontrado"}/>
     }
     </Container>
   );

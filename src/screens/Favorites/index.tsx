@@ -8,7 +8,7 @@ export function Favorites() {
 
   return (
     <Container>
-      <MovieList data={favorites}/>
+      <MovieList data={favorites} emptyMessage={"Nenhum filme adicionado aos favoritos"}/>
     </Container>
   );
 }
