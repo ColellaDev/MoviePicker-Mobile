@@ -69,10 +69,15 @@ export function Home() {
           <CategoryButtonText isActive={category === "upcoming"}>Upcoming</CategoryButtonText>
         </CategoryButton>
       </CategoryContainer>
-      {
-        isLoading ? <Loading/> :
-      <MovieList data={movies} emptyMessage={"Nenhum filme encontrado"}/>
-      }
+      
+      <MovieList
+        data={movies}
+        isLoading={isLoading}
+        emptyMessage={"Nenhum filme encontrado"}
+        media={media}
+        category={category}
+      />
+      
     </Container>
   );
 }

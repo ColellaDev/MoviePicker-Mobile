@@ -11,12 +11,17 @@ type MovieContextData = {
   picker: MovieProps[];
   setMovies: (movies: MovieProps[]) => void;
   isLoading: boolean;
-  fetchMoviesByCategory: (media: "movie" | "tv", category: "popular" | "top_rated" | "now_playing" | "upcoming") => Promise<void>;
+  fetchMoviesByCategory: (
+    media: "movie" | "tv",
+    category: "popular" | "top_rated" | "now_playing" | "upcoming",
+    pageNumber?: number 
+  ) => Promise<void>;
   searchMovies: (query: string) => Promise<void>;
   addFavorite: (movie:MovieProps) => void;
   removeFavorite: (id:number) => void;
   addPicker: (movie:MovieProps) => void;
   removePicker: (id:number) => void;
+  page: number;
 };
 
 const MovieContext = createContext<MovieContextData>({} as MovieContextData);
@@ -26,6 +31,7 @@ export function MovieProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [favorites, setFavorites] = useState<MovieProps[]>([]);
   const [picker, setPicker] = useState<MovieProps[]>([]);
+  const [page, setPage] = useState(1);
 
   const addFavorite = (movie:MovieProps) => {
     setFavorites( (prev) => [...prev, movie])
@@ -58,11 +64,23 @@ export function MovieProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const fetchMoviesByCategory = async (media: "movie" | "tv", category: "popular" | "top_rated" | "now_playing" | "upcoming") => {
+  const fetchMoviesByCategory = async (
+    media: "movie" | "tv",
+    category: "popular" | "top_rated" | "now_playing" | "upcoming",
+    pageNumber: number = 1
+  ) => {
     setIsLoading(true);
+  
     try {
-      const fetchedMedia = await fetchMediaByCategory[media][category]();
-      setMovies(fetchedMedia);
+      const fetchedMedia = await fetchMediaByCategory[media][category](pageNumber);
+  
+      if (pageNumber === 1) {
+        setMovies(fetchedMedia); 
+      } else {
+        setMovies((prevMovies) => [...prevMovies, ...fetchedMedia]);
+      }
+  
+      setPage(pageNumber); 
     } catch (error) {
       console.error("Erro ao buscar filmes:", error);
     } finally {
@@ -87,7 +105,7 @@ export function MovieProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <MovieContext.Provider value={{ movies, setMovies, isLoading, fetchMoviesByCategory, searchMovies, addFavorite, removeFavorite, favorites, addPicker, removePicker, picker }}>
+    <MovieContext.Provider value={{ movies, setMovies, isLoading, fetchMoviesByCategory, searchMovies, addFavorite, removeFavorite, favorites, addPicker, removePicker, picker, page }}>
       {children}
     </MovieContext.Provider>
   );
