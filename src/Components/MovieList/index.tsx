@@ -45,7 +45,7 @@ export const MovieList = React.memo(({ data, isLoading, emptyMessage, media, cat
         horizontal={false}
         contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
         ListEmptyComponent={!isLoading ? (<Text>{emptyMessage}</Text>) : null}
-        ListFooterComponent={!isLoading ? <Loading /> : null}
+        ListFooterComponent={isLoading ? <Loading /> : null}
         onEndReached={media && category ? loadMoreMovies : undefined}
         onEndReachedThreshold={0.1}
       />
