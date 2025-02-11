@@ -4,6 +4,8 @@ import {
   fetchPopularMovies, fetchSearchMovies, fetchRatedMovies, fetchNowPlayingMovies, fetchUpcomingMovies, 
   fetchPopularTv, fetchRatedTv, fetchNowPlayingTv, fetchUpcomingTv, fetchSearchTv 
 } from "../services/api";
+import { useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type MovieContextData = {
   movies: MovieProps[];
@@ -103,6 +105,39 @@ export function MovieProvider({ children }: { children: ReactNode }) {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const savedFavorites = await AsyncStorage.getItem("@favorites");
+        if (savedFavorites) {
+          setFavorites(JSON.parse(savedFavorites));
+        }
+
+        const savedPicker = await AsyncStorage.getItem("@picker");
+        if (savedPicker) {
+          setPicker(JSON.parse(savedPicker));
+        }
+      } catch (error) {
+        console.error("Erro ao carregar dados do AsyncStorage:", error);
+      }
+    };
+  
+    loadData();
+  }, []);
+
+  useEffect(() => {
+    const saveData = async () => {
+      try {
+        await AsyncStorage.setItem("@favorites", JSON.stringify(favorites));
+        await AsyncStorage.setItem("@picker", JSON.stringify(picker));
+      } catch (error) {
+        console.error("Erro ao salvar dados no AsyncStorage:", error);
+      }
+    };
+  
+    saveData();
+  }, [favorites, picker]); 
 
   return (
     <MovieContext.Provider value={{ movies, setMovies, isLoading, fetchMoviesByCategory, searchMovies, addFavorite, removeFavorite, favorites, addPicker, removePicker, picker, page }}>
