@@ -5,7 +5,7 @@ export const Container = styled.View`
   background-color: ${({ theme }) => theme.COLORS.GRAY_600};
   align-items: center;
   justify-content: center;
-  padding-top: 50px;
+  padding-top: 70px;
 `;
 
 export  const Text = styled.Text`
@@ -16,9 +16,6 @@ export  const Text = styled.Text`
 `
 
 export const DrawButton = styled.TouchableOpacity`
-  background-color: ${({theme}) =>  theme.COLORS.GRAY_400 };
-  padding: 4px 8px;
-  border-radius: 8px;
   margin-top: 10px;
   margin-bottom: 10px;
 `

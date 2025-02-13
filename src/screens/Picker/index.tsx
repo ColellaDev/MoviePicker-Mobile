@@ -57,7 +57,7 @@ export function Picker() {
         Balance o celular ou clique no dado e deixe o Picker decidir!
       </Text>
       <DrawButton onPress={handleShake}>
-        <Ionicons name="dice" size={24} color="#FFD447" />
+        <Ionicons name="dice" size={44} color="#FFD447" />
       </DrawButton>
       <MovieList
         data={picker}
