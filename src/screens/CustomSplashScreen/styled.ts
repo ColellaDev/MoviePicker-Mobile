@@ -25,11 +25,3 @@ export const Title = styled.Text`
   font-family: ${({theme}) => theme.FONT_FAMILY.BOLD};
   color: ${({theme}) => theme.COLORS.BASE_500};
 `;
-
-export const TitleTest = styled.Text`
-  font-size: 28px;
-  color: white;
-  font-weight: bold;
-  font-family: ${({theme}) => theme.FONT_FAMILY.POPPINS};
-  color: ${({theme}) => theme.COLORS.BASE_500}
-`;

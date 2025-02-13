@@ -10,7 +10,7 @@ import { StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { GenresProvider } from "./src/context/GenresContext";
 import { MovieProvider } from "./src/context/MovieContext";
-import { SplashScreen } from "./src/screens/SplashScreen"; 
+import { CustomSplashScreen } from "./src/screens/CustomSplashScreen"; 
 import theme from "./src/theme";
 import { AppRoutes } from "./src/routes/app.routes";
 
@@ -20,7 +20,7 @@ export default function App() {
 
   useEffect(() => {
     const loadApp = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 2000)); 
+      await new Promise((resolve) => setTimeout(resolve, 1000)); 
       setIsReady(true);
     };
 
@@ -35,7 +35,7 @@ export default function App() {
         <MovieProvider>
           <GenresProvider>
             <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
-            {isReady ? <AppRoutes /> : <SplashScreen />}
+            {isReady ? <AppRoutes /> : <CustomSplashScreen />}
           </GenresProvider>
         </MovieProvider>
       </ThemeProvider>

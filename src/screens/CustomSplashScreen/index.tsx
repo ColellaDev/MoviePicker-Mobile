@@ -1,7 +1,7 @@
-import { Container, TitleTest, Title } from "./styled";
+import { Container, Title } from "./styled";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-export function SplashScreen() {
+export function CustomSplashScreen() {
 
   return (
     <Container>
