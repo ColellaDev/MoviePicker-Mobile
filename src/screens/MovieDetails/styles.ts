@@ -32,7 +32,7 @@ export const Poster = styled.Image`
 export const Title = styled.Text`
   color: ${({ theme }) => theme.COLORS.WHITE};
   font-size: 20px;
-  font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
+  font-family: ${({ theme }) => theme.FONT_FAMILY.POPPINS};
   margin-top: 10px;
   align-self: center;
 `;

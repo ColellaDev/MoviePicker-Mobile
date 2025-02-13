@@ -20,5 +20,7 @@ export default {
   FONT_FAMILY: {
     REGULAR: "Roboto_400Regular",
     BOLD: "Roboto_700Bold",
+    ANTON: "Anton_400Regular",
+    POPPINS: "Poppins_600SemiBold"
   },
 };

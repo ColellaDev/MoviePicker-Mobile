@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Container, Header, Text, CategoryContainer, CategoryButton, CategoryButtonText } from "./styles";
 import { Input } from "../../Components/Input";
-import { Loading } from "../../Components/Loading";
 import { InputButton } from "../../Components/InputButton";
 import { useIsFocused } from "@react-navigation/native";
 import { useMovieContext } from "../../context/MovieContext";
