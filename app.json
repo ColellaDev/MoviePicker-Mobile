@@ -19,13 +19,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/dado.jpg",
         "backgroundColor": "#202024"
-      }
+      },
+      "package": "com.colelladev.MoviePicker"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "cab12bad-aada-42bc-af6a-48f58f49aaf5"
+      }
+    }
   }
 }
